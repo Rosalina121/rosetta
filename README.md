@@ -21,7 +21,7 @@ You can also mix both like this:
 - Deafult install locations
 - Uses standard Beat Saber folder naming scheme
 - You can choose up to 10 Beatsaver listings per provided Osu! song
-- Automatically goes to another osng after installation or not finding any candidates
+- Automatically goes to another song after installation or not finding any candidates
 - Shows song similarity (`kinda match`, `likely match` and `same name`)
 
 ## Upcoming:
