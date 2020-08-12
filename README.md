@@ -7,12 +7,13 @@
 - `urllib3`
 
 ## Usage:
-<sup>Disclaimer: Only tested on Windows and Poweshell, but GNU/Linux *should* be fine.</sup>
+<sup>Disclaimer: Only tested on Windows and Poweshell, but GNU/Linux *should* be fine.</sup>  
 Type in `python .\main.py <Osu! Songs path> <Beat Saber CustomLevels path>`
 
 If you have games installed in a default location you can use these instead:
 - `d` for default Osu! Songs path
-- `o` or `s` for the deafult Beat Saber CustomLevels path in either Oculus or Steam version respectively
+- `o` or `s` for the deafult Beat Saber CustomLevels path in either Oculus or Steam version respectively  
+
 You can also mix both like this:
 `python .\main.py "F:\Games\rythm games\Osu!\Songs" s`
 
