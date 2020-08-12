@@ -1,4 +1,6 @@
 import os
+import zipfile
+
 import requests
 import urllib.parse
 import urllib.request
@@ -49,8 +51,8 @@ def beatsaver(song, count):
                 dl = str(response['docs'][x]['stats']['downloads'])
                 up = str(response['docs'][x]['stats']['upVotes'])
                 key = response['docs'][x]['key']
-
-                song_list.append(Song(got_title, got_artist, key))
+                level_author = response['docs'][x]['metadata']['levelAuthorName']
+                song_list.append(Song(got_title, got_artist, key, level_author))
 
                 if any(s in song.title.casefold().split(' ') for s in got_title.casefold().split(' ')):
                     if any(s in song.artist.casefold().split(' ') for s in got_artist.casefold().split(' ')):
@@ -78,12 +80,30 @@ def beatsaver(song, count):
     return song_list
 
 
-def download(chosen_song):
+def download(chosen_song, save_path, filename, chunk_size=128):
     print('Downloading ' + chosen_song.title + ' by ' + chosen_song.artist)
     print('Key: ' + chosen_song.beatsaver_id)
-    sleep(2)
+    print('Processing...')
+
+    folder_path = os.path.join(save_path, filename)
+    zip_path = folder_path + '.zip'
+
+    url = 'https://beatsaver.com/api/download/key/' + chosen_song.beatsaver_id
+    hed = {
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) '
+                      'Chrome/39.0.2171.95 Safari/537.36'}
+
+    r = requests.get(url, stream=True, headers=hed)
+    with open(zip_path, 'wb') as fd:
+        for chunk in r.iter_content(chunk_size=chunk_size):
+            fd.write(chunk)
+
+    with zipfile.ZipFile(zip_path) as file:
+        file.extractall(folder_path)
+    os.remove(zip_path)
+
     print('DONE!')
-    sleep(1)
+    sleep(2)
 
 
 def clear():
@@ -104,6 +124,9 @@ if __name__ == '__main__':
 
     # Path to Osu! songs
     songs_dir = os.path.join('V:', 'Games', 'Osu!', 'Songs')
+
+    # Path to downloads for now
+    save_path = os.path.join('V:', os.sep, 'python', 'downloads')
 
     # How many listings per song? (Weird way just for the convenience here)
     count = 3
@@ -135,12 +158,14 @@ if __name__ == '__main__':
         print('Searching: ' + song.title + ' by ' + song.artist)
         returned_songs = beatsaver(song, count)
         if returned_songs:
-            song_id = input('Choose song to install (id), skip [Enter] or exit [Q] and [Enter]: ')
+            song_id = input('Choose song to install (id), skip [Enter] or exit [q] and [Enter]: ')
             if song_id == 'Q' or song_id == 'q':
                 break
             elif song_id.isdigit():
                 if len(returned_songs) > int(song_id) >= 0:
-                    download(returned_songs[int(song_id)])
+                    dl_song = returned_songs[int(song_id)]
+                    filename = dl_song.beatsaver_id + ' (' + dl_song.title + ' - ' + dl_song.level_author + ')'
+                    download(returned_songs[int(song_id)], save_path, filename)
                 else:
                     print('Id out of range. Skipping...')
                     sleep(2)
