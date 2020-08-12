@@ -1,5 +1,6 @@
 import os
 import zipfile
+import sys
 
 import requests
 import urllib.parse
@@ -119,16 +120,35 @@ def clear():
 if __name__ == '__main__':
     clear()
 
+    if len(sys.argv) == 3:
+        # Default Osu! path
+        if sys.argv[1] == 'd':
+            songs_dir = os.path.join(os.getenv('LOCALAPPDATA'), 'osu!', 'Songs')
+        # User provided path
+        else:
+            songs_dir = sys.argv[1]
+
+        # Default Oculus Beat Saber path
+        if sys.argv[2] == 'o':
+            save_path = os.path.join('C:', os.sep, 'Program Files', 'Oculus', 'Software', 'Software',
+                                     'hyperbolic-magnetism-beat-saber', 'Beat Saber_Data', 'CustomLevels')
+        # Default Steam Beat Saber path
+        elif sys.argv[2] == 's':
+            save_path = os.path.join('C:', os.sep, 'Program Files (x86)', 'Steam', 'steamapps', 'common', 'Beat Saber',
+                                     'Beat Saber_Data', 'CustomLevels')
+        # User provided path
+        else:
+            save_path = sys.argv[2]
+    else:
+        print('Use arguments: <Osu! Songs Path> <Beat Saber CustomLevels Path>')
+        print('or')
+        print('d - for default Osu! Songs path, o or s for default Beat Saber CustomLevels path (Oculus or Steam)')
+        exit()
+
     song_list = []
     for_counter = 0
 
-    # Path to Osu! songs
-    songs_dir = os.path.join('V:', 'Games', 'Osu!', 'Songs')
-
-    # Path to downloads for now
-    save_path = os.path.join('V:', os.sep, 'python', 'downloads')
-
-    # How many listings per song? (Weird way just for the convenience here)
+    # Listings per song
     count = 3
 
     for track in os.listdir(songs_dir):
