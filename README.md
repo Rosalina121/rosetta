@@ -26,8 +26,8 @@ You can also mix both like this:
 
 ## Upcoming:
 - GUI?
-- Create Beast Saber playlist made of downloaded songs
-- Sort results by likeness
+- Create Beast Saber playlist made up of downloaded songs
+- Sort results by relevancy
 - YOLO mode (install everything without asking user)
 - More than 10 entries to choose from (from experience that might be overkill though)
 - Download progress bar
