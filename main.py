@@ -1,18 +1,20 @@
+# I know, I know. This script is a print() fest. Should've spent some time on something like curses or a GUI already.
+# It's the functionality I am here after. Pretty and user friendly interface second.
+
 import os
 import zipfile
 import sys
-
 import requests
 import urllib.parse
 import urllib.request
 from time import sleep
 from song import Song
 
+
 def rann(map_path):
     # Pick first .osu file
     file = [x for x in os.listdir(map_path) if x.endswith('.osu')][0]
     osu_path = os.path.join(map_path, file)
-    # print(osu_path)
 
     f = open(osu_path, 'r', encoding='UTF-8')
     lines = f.readlines()
@@ -40,13 +42,16 @@ def beatsaver(song, count):
 
     response = requests.get(url, headers=hed).json()
     listings = response["totalDocs"]
+
     if listings == 0:
         song_exists = False
+        # Surprisingly, the song might not exists
     loop_range = range(count) if not listings < count else range(listings)
 
     if song_exists:
         for x in loop_range:
             try:
+                # Reading data from retrieved JSON
                 got_title = response['docs'][x]['name']
                 got_artist = response['docs'][x]['metadata']['songAuthorName']
                 dl = str(response['docs'][x]['stats']['downloads'])
@@ -55,6 +60,7 @@ def beatsaver(song, count):
                 level_author = response['docs'][x]['metadata']['levelAuthorName']
                 song_list.append(Song(got_title, got_artist, key, level_author))
 
+                # Checking how close is the listing to the provided beatmap
                 if any(s in song.title.casefold().split(' ') for s in got_title.casefold().split(' ')):
                     if any(s in song.artist.casefold().split(' ') for s in got_artist.casefold().split(' ')):
                         print('>[' + str(x) + '][LIKELY MATCH]---------')
@@ -104,15 +110,16 @@ def download(chosen_song, save_path, filename, chunk_size=128):
     os.remove(zip_path)
 
     print('DONE!')
+
+    # This is here for the peace of mind fo the user that download actually worked
     sleep(2)
 
 
 def clear():
-    # for windows
+    # For Windows
     if os.name == 'nt':
         _ = os.system('cls')
-
-        # for mac and linux(here, os.name is 'posix')
+    # For Mac and Linux
     else:
         _ = os.system('clear')
 
@@ -157,7 +164,7 @@ if __name__ == '__main__':
     print("Disclaimer: Many BeatSaber and Osu! mappers instead of original song artist's name type in their own. It's "
           "not that my code is THAT dumb. Just those mappers are. Also an 'Author' field may seem confusing if you "
           "ask me.")
-    print("Also, any unrecognized input counts as skip, so there's that.\n")
+    print("Btw, any unrecognized input counts as a skip, so there's that.\n")
 
     try:
         count = int(input('How many listings per song? ([Enter] for default = 3, max 10) '))
@@ -172,11 +179,11 @@ if __name__ == '__main__':
         print('Using default. (3)')
 
     for song in song_list:
-        # inp_string = input('Press [Enter] for the next listing or [Q] and [Enter] to exit.\n')
         clear()
 
         print('Searching: ' + song.title + ' by ' + song.artist)
         returned_songs = beatsaver(song, count)
+
         if returned_songs:
             song_id = input('Choose song to install (id), skip [Enter] or exit [q] and [Enter]: ')
             if song_id == 'Q' or song_id == 'q':
