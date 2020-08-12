@@ -57,12 +57,13 @@ def beatsaver(song, count):
         except IndexError:
             print('>[NOT FOUND]--------------')
             break
-    print('>[END]--------------------\n')
+    # print('>[END]--------------------\n')
+    print("\n")
 
 
 if __name__ == "__main__":
     song_list = []
-
+    for_counter = 0
     # Path to Osu! songs
     songs_dir = os.path.join("V:", "Games", "Osu!", "Songs")
 
@@ -72,10 +73,15 @@ if __name__ == "__main__":
     for track in os.listdir(songs_dir):
         song_list.append(rann(os.path.join(songs_dir, track)))
 
-    print("Disclaimer: Many BeatSaber and Osu! mappers instead of song's artist name type in their own. It's not that "
-          "my code is THAT dumb. Those mappers are.")
+    print("Disclaimer: Many BeatSaber and Osu! mappers instead of original song artist's name type in their own. It's "
+          "not that my code is THAT dumb. Just those mappers are. Also an \"Author\" field may seem confusing if you "
+          "ask me.\n")
 
     for song in song_list:
+        inp_string = input("Press Enter for the next listing or Q and Enter to exit.\n")
+        if inp_string == "Q" or inp_string == "q":
+            break
         print('Searching: ' + song.title + ' by ' + song.artist)
         beatsaver(song, count)
-    print("DONE for " + str(len(songs_dir)) + " songs!")
+        for_counter +=1
+    print("DONE for " + str(for_counter) + " songs!")
