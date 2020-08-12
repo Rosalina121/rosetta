@@ -15,3 +15,4 @@ Upcoming:
 - More conviniet way for specifying paths
 - GUI?
 - Maybe auto path? Since most users install games in default folders.
+- Create Beast Saber playlist made of downloaded songs
