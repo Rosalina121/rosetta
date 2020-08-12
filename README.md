@@ -42,3 +42,4 @@ Of course it's not perfect. Many mappers tend to place their nicknames in the pl
 - More than 10 entries to choose from (from experience that might be overkill though)
 - Download progress bar
 - Support for egde cases (like absent fields in song's metadata)
+- Ignore songs already present in both Osu! Songs and Beat Saber CustomLevels
