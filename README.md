@@ -16,3 +16,5 @@ Upcoming:
 - GUI?
 - Maybe auto path? Since most users install games in default folders.
 - Create Beast Saber playlist made of downloaded songs
+- Sort results by likeness
+- YOLO mode (install everything without asking user)
