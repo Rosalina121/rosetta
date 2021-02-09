@@ -16,7 +16,7 @@ Type in `python .\main.py <Osu! Songs path> <Beat Saber CustomLevels path>`
 
 If you have games installed in a default location you can use these instead:
 - `d` for default Osu! Songs path
-- `o` or `s` for the deafult Beat Saber CustomLevels path in either Oculus or Steam version respectively  
+- `o` or `s` for the deafult Beat Saber CustomLevels path for either Oculus or Steam version respectively  
 
 You can also mix both like this:
 `python .\main.py "F:\Games\rythm games\Osu!\Songs" s`
@@ -29,7 +29,7 @@ Of course it's not perfect. Many mappers tend to place their nicknames in the pl
 
 ## Features:
 - Deafult install locations
-- Uses standard Beat Saber folder naming scheme
+- Uses standard Beat Saver folder naming scheme
 - You can choose up to 10 Beatsaver listings per provided Osu! song
 - Automatically goes to another song after installation or not finding any candidates
 - Shows song similarity (`kinda match`, `likely match` and `same name`)
@@ -38,7 +38,7 @@ Of course it's not perfect. Many mappers tend to place their nicknames in the pl
 - GUI?
 - Create Beast Saber playlist made up of downloaded songs
 - Sort results by relevancy
-- YOLO mode (install everything without asking user)
+- YOLO mode (install everything without asking user, but unlikely considering Beat Saver API limits)
 - More than 10 entries to choose from (from experience that might be overkill though)
 - Download progress bar
 - Support for egde cases (like absent fields in song's metadata)
